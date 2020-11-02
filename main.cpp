@@ -35,10 +35,11 @@ int main(int argc, char* argv[]) {
         text += argv[i];
     }
 
-    Route<int, int, float> route(
+    Abstract<int>::Route<int, int, float> route(
         "hello %d world %d final %f",
-        [](int a, int b, float c) {
+        [](int a, int b, float c, int extra) {
             std::cout << a << " - " << b  << " " << c << std::endl;
+            std::cout << extra << std::endl;
     });
 
 
@@ -49,7 +50,7 @@ int main(int argc, char* argv[]) {
     // });
 
     // route("hello 52 world 34 final 9.0");
-    route(text);
+    route(text, 5);
 
     return 0;
 }

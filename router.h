@@ -30,25 +30,31 @@ std::tuple<T...> scan(const std::string& text, const std::string& pattern) {
     return values;
 }
 
-template<typename... T>
-class Route {
+template<typename... E>
+class Abstract {
     public:
-        using Callable = std::function<void(T...)>;
-        Route(const std::string& pattern, const Callable& callable): _pattern(pattern), _callable(callable)
-        {}
+        template<typename... T>
+        class Route {
+            public:
+                using Callable = std::function<void(T..., E...)>;
+                Route(const std::string& pattern, const Callable& callable): _pattern(pattern), _callable(callable)
+                {}
 
-        void operator() (const std::string& text) {
-            std::tuple<T...> values = scan<T...>(text, _pattern);
+                void operator() (const std::string& text, E... extras) {
+                    std::tuple<T...> values = scan<T...>(text, _pattern);
 
-            std::apply(
-                _callable,
-                values
-            );
-        }
+                    std::apply(
+                        [&](T... args){
+                            _callable(args..., extras...);
+                        },
+                        values
+                    );
+                }
 
-    private:
-        std::string _pattern;
-        Callable _callable;
+            private:
+                std::string _pattern;
+                Callable _callable;
+        };
 };
 
 // template<typename... T>
