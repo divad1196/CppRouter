@@ -31,7 +31,7 @@ std::tuple<T...> scan(const std::string& text, const std::string& pattern) {
 }
 
 template<typename... E>
-class Abstract {
+class Extras {
     public:
         template<typename... T>
         class Route {
@@ -56,6 +56,11 @@ class Abstract {
                 Callable _callable;
         };
 };
+
+
+// Without Extra Parameters
+template<typename... T>
+using Route = Extras<>::Route<T...>;
 
 // template<typename... T>
 // Route<T...> make_route(const std::string& pattern, std::function<void(T...)> callable) {
