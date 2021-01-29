@@ -76,3 +76,11 @@ router("abc");  // Error
 * Not relying on C formatting
 * Automatic route match
 * Default parameter
+
+##### Todo
+
+1. route template deduction (issue with lambda as argument)
+2. router (matching argument types)
+   Avoiding all comparisons.
+3. better parser tant sscanf
+4. 
